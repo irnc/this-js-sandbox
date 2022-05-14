@@ -1,0 +1,70 @@
+<p>Look at Console in Developer Tools.</p>
+
+<script>
+    'use strict'
+
+    console.group('this === window on script-level is always true, even in strict mode')
+
+    // true
+    console.log('this === window', this === window)
+
+    console.groupEnd()
+</script>
+
+<script type="module">
+    console.group('in module `this` is undefined')
+
+    // undefined
+    console.log('this', this)
+    console.log('window', window)
+
+    console.groupEnd()
+</script>
+
+<script>
+    (function () {
+        console.group('this === window is true inside function in non-strict mode')
+
+        // true
+        console.log('this === window', this === window)
+
+        console.groupEnd()
+    })();
+
+    (function () {
+        'use strict'
+
+        console.group('use strict at function-level')
+
+        // false
+        console.log('this === window', this === window)
+
+        // undefined
+        console.log('this', this)
+
+        console.groupEnd()
+    })();
+</script>
+
+<script>
+    'use strict'
+
+    function fn() {
+
+        // false
+        console.log('this === window', this === window)
+
+        // undefined
+        console.log('this', this)
+    }
+
+    console.group('use strict at script-level, function called as `fn()`')
+
+    fn()
+
+    console.group('but when called as `window.fn()` ...')
+    window.fn()
+    console.groupEnd()
+
+    console.groupEnd()
+</script>
